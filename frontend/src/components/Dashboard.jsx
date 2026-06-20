@@ -156,14 +156,14 @@ const Dashboard = () => {
 };
 
 /* Helper Components for clean code */
-const NavItem = ({ icon, label, active = false }: { icon: React.ReactNode, label: string, active?: boolean }) => (
+const NavItem = ({ icon, label, active = false }) => (
   <a href="#" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${active ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'}`}>
     {icon}
     <span className="font-medium">{label}</span>
   </a>
 );
 
-const TripCard = ({ city, date, image }: { city: string, date: string, image: string }) => (
+const TripCard = ({ city, date, image }) => (
   <div className="bg-white border border-slate-200 rounded-xl overflow-hidden hover:shadow-md transition-shadow group cursor-pointer">
     <div className="h-32 relative overflow-hidden">
       <img src={image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt={city} />

@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 const userSchema = new Schema(
   {
-    FullName: {
+    fullname: {
       type: String,
       trim: true,
       lowercase: true,
@@ -23,17 +23,16 @@ const userSchema = new Schema(
       required: [true, "password is required"],
       unique: true,
     },
-    refresh_token: {
+    refreshToken: {
       type: String,
     },
   },
   { timestamps: true },
 );
 
-userSchema.pre("save", async function () {
-  if (!this.isModified("password")) return next();
-  this.password = brypt.hash(this.password, 10);
-  return next();
+userSchema.pre("save", async function() {
+  if (!this.isModified("password")) return ;
+  this.password = await bcrypt.hash(this.password, 10);
 });
 
 userSchema.methods.isPasswordCorrect = async function isPasswordCorrect() {

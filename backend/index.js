@@ -1,13 +1,27 @@
-import 'dotenv/config'
+
 import express from "express"
-const app = express();
-const port = 8000
+import DBconnect from './db/dbconnect.js';
+import "dotenv/config"
+import app from "./app.js"
 
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
 
-app.listen(port, () => {
+DBconnect().
+then( 
+  () => {
+    app.listen(process.env.PORT || 3000, () => {
   console.log(`Example app listening on port ${process.env.PORT}`);
 });
+
+  }
+).catch(
+  () => {
+    console.log("MONGODB connection failed !!!",
+    )
+  }
+)
+
+
+import userRouter from "./Routes/User.routes.js"
+
+app.use("/register",userRouter)

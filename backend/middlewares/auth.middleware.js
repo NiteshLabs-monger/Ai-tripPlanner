@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken"
-import { asyncHandler } from "../utils/AsyncHandler"
-import { ApiError } from "../utils/ApiError"
-import User from "../models/user.model"
+import { asyncHandler } from "../utils/AsyncHandler.js"
+import { ApiError } from "../utils/ApiError.js"
+import User from "../models/user.model.js"
 
 
-const verifyjwt = asyncHandler((req,_,next) => {
+const verifyjwt = asyncHandler(async (req,_,next) => {
     try {
         const Token = req.cookies?.accessToken 
         if(!Token){

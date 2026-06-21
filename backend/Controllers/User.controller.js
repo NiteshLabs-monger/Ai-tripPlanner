@@ -1,7 +1,7 @@
-import { ApiError } from "../utils/ApiError";
-import { asyncHandler } from "../utils/AsyncHandler";
-import {User,} from  "../models/user.model"
-import { ApiResponse } from "../utils/ApiResponse";
+import { ApiError } from "../utils/ApiError.js";
+import { asyncHandler } from "../utils/AsyncHandler.js";
+import User from  "../models/user.model.js"
+import { ApiResponse } from "../utils/ApiResponse.js";
 
 const generateAccessandRefreshToken = async (userId) => {
     try {
@@ -21,20 +21,20 @@ const generateAccessandRefreshToken = async (userId) => {
 }
 
 
-const registerUser = asyncHandler((req,res) => {
-    const {FullName , Email , password} = req.body
+const registerUser = asyncHandler( async (req,res) => {
+    const {fullname, email , password} = req.body
 
     if(
-        [FullName,Email,password].some((field) => {
+        [fullname,email,password].some((field) => 
             field?.trim() === ""
-        })
+        )
     )
         {
             throw new ApiError(400,"all fields are required")
         }
     
-    const existedUser = await User.findone(
-        "email"
+    const existedUser = await User.findOne(
+        {email}
     )
 
     if(existedUser){
@@ -42,10 +42,13 @@ const registerUser = asyncHandler((req,res) => {
     }
 
     const user = await User.create(
-        fullName,
-        Email,
-        Password,
-        refreshToken,
+        {
+        fullname,
+        email,
+        password,
+        
+        }
+    
         )
 
     const createduser = await User.findById(user._id).select(
@@ -57,12 +60,12 @@ const registerUser = asyncHandler((req,res) => {
     }
 
     return res.status(201).json(
-        new ApiResponse(200, createdUser, "User registered Successfully"))
+        new ApiResponse(200, createduser, "User registered Successfully"))
 
 
 })
 
-const loginUser = asyncHandler((req,res) => {
+const loginUser = asyncHandler( async (req,res) => {
     
     const {email,password} = req.body 
 
@@ -71,7 +74,7 @@ const loginUser = asyncHandler((req,res) => {
 
     }
 
-    const user = await User.findone({email})
+    const user = await User.findOne({email})
 
     if(!user){
         throw ApiError(401,"user is not registered with this email")
@@ -106,7 +109,7 @@ const loginUser = asyncHandler((req,res) => {
 })
 
 
-const logoutUser = asyncHandler((req,res) => {
+const logoutUser = asyncHandler(async (req,res) => {
     await User.findByIdAndUpdate(
         req.user._id,
         {

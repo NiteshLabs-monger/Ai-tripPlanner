@@ -1,18 +1,10 @@
-import { useState } from 'react'
-
-import './App.css'
-import Dashboard from './components/Dashboard'
-import Authform from './components/sign-up'
+import { RouterProvider } from 'react-router-dom'
+import {router} from  "./routes/AppRoutes.jsx"
 
 function App() {
 
+  <RouterProvider router={router} />
 
-  return (
-    <>
-   <Authform/>
-      
-    </>
-  )
 }
 
-export default App
+export default App;

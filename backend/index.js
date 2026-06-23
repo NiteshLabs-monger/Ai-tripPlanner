@@ -22,6 +22,3 @@ then(
 )
 
 
-import userRouter from "./Routes/User.routes.js"
-
-app.use("/register",userRouter)

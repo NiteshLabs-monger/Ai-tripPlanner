@@ -1,7 +1,8 @@
-import { useState } from 'react';
+
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signupSchema } from '../../schemas/SignupSchema.js';
+import { signinSchema } from '../../schemas/signinschema.js';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card.jsx';
 import { Field, FieldError, FieldLabel } from './ui/field.jsx';
 import { Input } from './ui/input.jsx';
@@ -9,22 +10,41 @@ import { Button } from './ui/button.jsx'; // Assuming you have a button componen
 import bgImage from '@/assets/trip.jpg'; 
 import { Loader2 } from 'lucide-react';// Import your image
 import { useMatch } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate} from 'react-router-dom';
+import axios from 'axios';
+import { userService } from '@/api/authapi.js';
 
 export default function Authform() {
+
+  const isSignup = useMatch("/signup");
+  const navigate =useNavigate()
+  
+  const currentSchema = isSignup? signupSchema:signinSchema;
   const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm({
-    resolver: zodResolver(signupSchema),
+    resolver: zodResolver(currentSchema),
     defaultValues: {
-      fullName: "",
+      fullname: "",
       email: "",
       password: "",
       confirmPassword: ""
     }
   });
-  const isSignup = useMatch("/signup");
+  
+
 
   const onSubmit = async (data) => {
-    console.log(data);
+  
+    try {
+      if(isSignup){
+         userService.signup(data)
+        navigate('/signin')
+      }else{
+        userService.signin(data)
+        navigate('/dashboard')
+      }
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   return (
@@ -37,13 +57,13 @@ export default function Authform() {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {/* Ensure these 'name' props match your Zod schema keys exactly */}
             <Controller
-              name="fullName"
+              name="fullname"
               control={control}
               render={({ field }) => (
                 <Field>
                   <FieldLabel>Full Name</FieldLabel>
                   <Input placeholder="Your Name" {...field} />
-                  <FieldError>{errors.fullName?.message}</FieldError>
+                  <FieldError>{errors.fullname?.message}</FieldError>
                 </Field>
               )}
             />
@@ -84,7 +104,7 @@ export default function Authform() {
             
             
            <CardFooter className="flex flex-col items-center">
-            <Button type="submit" className="w-full mt-4" disabled={isSubmitting}>
+            <Button type="submit" className="w-full " disabled={isSubmitting}>
                         {isSubmitting ? (
                           <>
 
@@ -115,7 +135,7 @@ export default function Authform() {
             
                       <div className="text-center mt-4">
                         <p>
-                          New to resume Forge?{" "}
+                          New to Trip Dost?{" "}
                           <Link
                             to="/signup"
                             className="text-blue-600 hover:text-blue-800"

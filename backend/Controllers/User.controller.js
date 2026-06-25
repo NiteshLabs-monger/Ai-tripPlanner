@@ -7,9 +7,8 @@ const generateAccessandRefreshToken = async (userId) => {
     try {
         const user = await User.findById(userId)
         const accessToken = user.generateAccessToken()
-        console.log(accessToken)
         const refreshToken = user.generateRefreshToken()
-        console.log(refreshToken)
+
 
         user.refreshToken = refreshToken
         await user.save({validateBeforeSave:false})
@@ -90,12 +89,14 @@ const loginUser = asyncHandler( async (req,res) => {
         throw new ApiError(400,"please enter correct password")
     }
 
-    const {accessToken, refreshToken} = generateAccessandRefreshToken(user._id)
+    const {accessToken, refreshToken} = await generateAccessandRefreshToken(user._id)
 
     const loggedinUser = await User.findById(user._id).select("-password -refreshToken")
     const options = {
         httpOnly:true,
-        secure:true,
+        secure: false,
+        maxAge: 3600000,
+        path : "/"
     }
 
    return res
@@ -130,7 +131,10 @@ const logoutUser = asyncHandler(async (req,res) => {
     )
 const options = {
         httpOnly: true,
-        secure: true
+
+    secure: false,  
+    sameSite: "lax",     
+    maxAge: 604800000
     }
 
     return res

@@ -16,4 +16,11 @@ router.route('/login').post(
 router.route("/logout").post(verifyjwt,
     logoutUser
 )
+
+router.route("/checksession").get(verifyjwt,(req,res) => {
+    res.status(200).json({
+    authenticated: true,
+    user: req.user
+  });
+})
 export default router;

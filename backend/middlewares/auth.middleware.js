@@ -4,7 +4,7 @@ import { ApiError } from "../utils/ApiError.js"
 import User from "../models/user.model.js"
 
 
-const verifyjwt = asyncHandler(async (req,res,next) => {
+const verifyjwt = asyncHandler(async (req,_,next) => {
     try {
         const Token = req.cookies?.accessToken 
         if(!Token){

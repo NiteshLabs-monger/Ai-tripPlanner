@@ -11,13 +11,14 @@ import bgImage from '@/assets/trip.jpg';
 import { Loader2 } from 'lucide-react';// Import your image
 import { useMatch } from 'react-router-dom';
 import { Link ,useNavigate} from 'react-router-dom';
-import axios from 'axios';
 import { userService } from '@/api/authapi.js';
+import { useAuthStore } from '@/context/useAuthstore.js';
 
 export default function Authform() {
 
   const isSignup = useMatch("/signup");
   const navigate =useNavigate()
+  const {setAuth} = useAuthStore()
   
   const currentSchema = isSignup? signupSchema:signinSchema;
   const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm({
@@ -39,7 +40,10 @@ export default function Authform() {
          userService.signup(data)
         navigate('/signin')
       }else{
-        userService.signin(data)
+        const user = userService.signin(data)
+        console.log(user)
+        setAuth(user)
+
         navigate('/dashboard')
       }
     } catch (error) {

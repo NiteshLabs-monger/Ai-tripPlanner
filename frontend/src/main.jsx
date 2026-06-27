@@ -8,13 +8,15 @@ import App from './App'
 
 
 
+
 createRoot(document.getElementById('root')).render(
   
   <StrictMode>
+    <RouterProvider router = {router}>
+     <App/>
+     </RouterProvider>
     
-    <RouterProvider router={router}>
-      <App/>
-    </RouterProvider>
+     
   </StrictMode>
   
   

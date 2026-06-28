@@ -5,10 +5,11 @@ import { useAuthStore } from '@/context/useAuthstore';
 
 
 export const ProtectedRoute = () => {
-    const {isAuthenticated} =useAuthStore()
+    const {isAuthenticated} = useAuthStore()
+    console.log(isAuthenticated)
   
   if (!isAuthenticated) {
-    return <Navigate to="/signin" replace />;
+    return <Navigate to="/" replace />;
   }
 
   // If authenticated, render the child route component via <Outlet />

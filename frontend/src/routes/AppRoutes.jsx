@@ -1,10 +1,11 @@
-import { lazy, Suspense } from 'react';
+import { Suspense } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { ProtectedRoute } from './protectedRoutes.jsx';
-import DashboardLayout from '../layouts/dashboardLayout.jsx';
+import DashboardLayout from '../layouts/applayout.jsx';
 import SignIn from '@/pages/auth/signin.jsx';
 import Signup from '@/pages/auth/signup.jsx';
 import Dashboard from '@/pages/Dashboard/Dashboard.jsx';
+import App from "../App.jsx"
 
 
 
@@ -17,7 +18,7 @@ export const router =
     
     {
       path: '/',
-      element: <Navigate to="/dashboard" replace />,
+      element: <App/>,
     },
     {
       path: '/signin',
@@ -32,25 +33,21 @@ export const router =
       ),
     },
 
-    // Protected Routes Layout
-    {
-      element: <ProtectedRoute  />,
-      children: [
+  
         {
           path: '/dashboard',
           element: <DashboardLayout />,
           children: [
             {
-              index: true, // Matches /dashboard exactly
+              index: true, 
               element: <Suspense fallback={<PageLoader />}><Dashboard /></Suspense>,
             },
             
           ],
         },
-      ],
-    },
+    
 
-    // Global Catch-all / 404
+
     {
       path: '*',
       element: <div style={{ padding: '40px', textAlign: 'center' }}><h2>404 - Page Not Found</h2></div>,

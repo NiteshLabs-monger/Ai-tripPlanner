@@ -4,7 +4,7 @@ import './index.css'
 import { RouterProvider } from 'react-router-dom'
 import {router} from  "./routes/AppRoutes.jsx"
 
-import App from './App'
+import App from './App.jsx'
 
 
 

@@ -6,7 +6,7 @@ export const useAuthStore = create((set) => ({
   isAuthenticated: false,
   isCheckingAuth: true, 
 
-  setAuth: (user) => set({ user, isAuthenticated: true, isCheckingAuth: false }),
+  setAuth: (user) => set({ user:user, isAuthenticated: true, isCheckingAuth: false }),
   clearAuth: () => set({ user: null, isAuthenticated: false, isCheckingAuth: false }),
   setCheckingAuth: (status) => set({ isCheckingAuth: status }),
 }));

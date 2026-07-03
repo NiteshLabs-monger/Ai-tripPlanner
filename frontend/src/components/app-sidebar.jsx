@@ -4,7 +4,10 @@ import * as React from "react"
 import { useAuthStore } from "@/context/useAuthstore"
 
 import { NavUser } from "@/components/nav-user"
+import {
 
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
 import  {
   Sidebar,
   SidebarContent,
@@ -21,16 +24,19 @@ export function AppSidebar({
 }) {
   const {user} = useAuthStore()
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
+    <Sidebar collapsible="icon"  {...props}>
+      <SidebarHeader >
+        <SidebarTrigger />
         <Plane/>
-        Trip Pal
+        <p>Trip Pal</p>
+        
       </SidebarHeader>
       <SidebarContent>
         
+        
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={user} />
+        
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

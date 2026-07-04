@@ -18,6 +18,9 @@ app.use(express.static("public"))
 app.use(cookieParser())
 
 import userRouter from "./Routes/User.routes.js"
+import itenaryRouter from "./Routes/itenaryRoutes.js"
+
+app.use("/itenary",itenaryRouter)
 app.use("/auth",userRouter)
 
 export default app

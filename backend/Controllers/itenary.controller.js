@@ -2,28 +2,28 @@ import Itinerary from '../models/itenary.model.js';
 import { GoogleGenAI } from "@google/genai"
 import {asyncHandler} from '../utils/AsyncHandler.js';
 
-console.log("GEMINI_API_KEY:", process.env.GEMINI_API_KEY); // Debugging line to check if the API key is loaded
 
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const ai = new GoogleGenAI({});
+
 
 const generateItinerary = asyncHandler(async (req, res) => {
-  
-    const { destination, durationDays, budget, preferences } = req.body;
 
-    if (!destination || !durationDays) {
+
+  
+    const { destination, duration, budget, preferences } = req.body;
+
+    if (!destination || !duration) {
       return res.status(400).json({ error: "Destination and duration are required." });
     }
-
-    // Construct a strict prompt forcing a specific JSON structure
     const prompt = `
-      Generate a ${durationDays}-day itinerary for ${destination}.
+      Generate a ${duration}-day itinerary for ${destination}.
       Budget level: ${budget}. Interests: ${preferences?.join(', ') || 'General'}.
       
       Respond ONLY with a valid JSON object matching this schema structure:
       {
         "destination": "${destination}",
-        "durationDays": ${durationDays},
+        "durationDays": ${duration},
         "budget": "${budget}",
         "preferences": ${JSON.stringify(preferences)},
         "schedule": [
@@ -38,7 +38,6 @@ const generateItinerary = asyncHandler(async (req, res) => {
       }
     `;
 
-    // Call the model using Structured Outputs for 100% reliable JSON parsing
     const response = await ai.models.generateContent({
       model: 'gemini-3.1-flash-lite',
       contents: prompt,
@@ -51,9 +50,9 @@ const generateItinerary = asyncHandler(async (req, res) => {
     const itineraryData = JSON.parse(response.text);
 
     // Save the generated itinerary to MongoDB
-    const savedItinerary = await Itinerary.create(itineraryData);
+    // const savedItinerary = await Itinerary.create(itineraryData);
 
-    return res.status(201).json(savedItinerary);
+    return res.status(201).json(itineraryData);
 
 })
 // Fetch a saved itinerary by ID

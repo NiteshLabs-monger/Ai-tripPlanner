@@ -16,7 +16,7 @@ const DaySchema = new mongoose.Schema({
 const ItinerarySchema = new mongoose.Schema({
   destination: { type: String, required: true },
   durationDays: { type: Number, required: true },
-  budget: { type: String, enum: ['Budget', 'Moderate', 'Luxury'] },
+  budget: { type: String, enum: ['Budget', 'moderate', 'Luxury'] },
   preferences: [String], // e.g., ['Adventure', 'Foodie', 'History']
   schedule: [DaySchema],
   createdAt: { type: Date, default: Date.now }

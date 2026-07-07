@@ -6,8 +6,7 @@ import SignIn from '@/pages/auth/signin.jsx';
 import Signup from '@/pages/auth/signup.jsx';
 import Dashboard from '@/pages/Dashboard/Dashboard.jsx';
 import App from "../App.jsx"
-
-
+import AskAi from '@/pages/askAI/itenaryGeneration.jsx';
 
 
 // Loading fallback component
@@ -44,6 +43,10 @@ export const router =
             },
             
           ],
+        },
+        {
+          path: "/askai",
+          element: <Suspense fallback={<PageLoader />}><AskAi /></Suspense>,
         },
     
 

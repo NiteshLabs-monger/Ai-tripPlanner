@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import ItenaryGenerationService from '@/api/askaiapi.js'
 
 export default function TripPreferenceWizard() {
   const [step, setStep] = useState(1);
   const totalSteps = 3;
 
-  // Initialize react-hook-form with default values
+  
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
     defaultValues: {
       destination: '',
@@ -17,7 +18,6 @@ export default function TripPreferenceWizard() {
     }
   });
 
-  // Watch values for our custom Tailwind components (cards, segmented toggles, tags)
   const watchParty = watch('travelParty');
   const watchBudget = watch('budget');
   const watchPace = watch('pace');
@@ -27,8 +27,14 @@ export default function TripPreferenceWizard() {
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
 
   const onSubmit = async (data) => {
-    console.log("Payload sent to your MERN Backend:", data);
-    // fetch('http://localhost:3000/api/generate', { method: 'POST', body: JSON.stringify(data) })
+    try {
+      const response = ItenaryGenerationService.generateItenary(data);
+      console.log("Itinerary generated successfully:", response);     
+    } catch (error) {
+      console.error("Error generating itinerary:", error);
+      
+    }
+    
   };
 
   const handleTagToggle = (tagValue) => {
@@ -41,7 +47,7 @@ export default function TripPreferenceWizard() {
   };
 
   return (
-    <div className="max-w-md mx-auto my-8 p-6 bg-white border border-gray-200 rounded-xl shadow-sm">
+    <div className="max-w-md mx-auto my-2 p-6 bg-white border border-gray-200 rounded-xl shadow-sm">
       
       {/* Progress Header */}
       <div className="flex justify-between items-center mb-6 text-xs font-semibold tracking-wide uppercase text-gray-500">
@@ -58,13 +64,12 @@ export default function TripPreferenceWizard() {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        
-        {/* --- STEP 1: LOGISTICS --- */}
+    
         {step === 1 && (
           <div className="space-y-4">
             <div>
               <h2 className="text-xl font-bold text-gray-900">Where and when?</h2>
-              <p className="text-sm text-gray-500">Tell us your destination and trip length.</p>
+              <p className="text-sm text-gray-500">Tell us your destination and trip Duration.</p>
             </div>
             
             <div>
@@ -81,7 +86,7 @@ export default function TripPreferenceWizard() {
               <label className="block text-sm font-medium text-gray-700 mb-1">Duration (Days)</label>
               <input 
                 type="number" 
-                {...register('days', { min: 1, max: 30 })}
+                {...register('duration', { min: 1, max: 30 })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
               />
             </div>
@@ -92,7 +97,7 @@ export default function TripPreferenceWizard() {
         {step === 2 && (
           <div className="space-y-4">
             <div>
-              <h2 className="text-xl font-bold text-gray-900">Who is going & budget?</h2>
+              <h2 className="text-xl font-bold text-gray-900">Who are going & budget?</h2>
               <p className="text-sm text-gray-500">Tailor the context of your recommendations.</p>
             </div>
             

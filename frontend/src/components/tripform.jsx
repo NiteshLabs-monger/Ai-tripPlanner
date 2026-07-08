@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ItenaryGenerationService from '@/api/askaiapi.js'
 
-export default function TripPreferenceWizard() {
+export default function TripPreferenceWizard({onSuccess}) {
   const [step, setStep] = useState(1);
   const totalSteps = 3;
 
@@ -28,7 +28,8 @@ export default function TripPreferenceWizard() {
 
   const onSubmit = async (data) => {
     try {
-      const response = ItenaryGenerationService.generateItenary(data);
+      const response = await ItenaryGenerationService.generateItenary(data);
+      onSuccess(response.data); // Call the onSuccess callback with the generated itinerary data
       console.log("Itinerary generated successfully:", response);     
     } catch (error) {
       console.error("Error generating itinerary:", error);

@@ -8,6 +8,7 @@ export default function AskAi() {
   const [activeTrip, setActiveTrip] = useState(null);
 
   const handleTripSuccess = (data) => {
+    console.log(data)
     setHasItinerary(true);
     setActiveTrip(data);
   };

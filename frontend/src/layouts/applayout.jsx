@@ -15,7 +15,7 @@ export default function DashboardLayout() {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <TripPreferenceWizard />
+        <Dashboard />
         
       </SidebarInset>
     </SidebarProvider>

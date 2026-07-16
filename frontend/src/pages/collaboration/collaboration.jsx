@@ -1,6 +1,7 @@
 import { useCurrentItinerary } from "@/context/useItineraryStore";
 import { useState } from "react";
 import TripMap from "@/components/mapcomponent.jsx";
+import TodayItinarary from "@/components/itenararycard";
 
 export default function Collaborationcenter(){
     // const {itinerary,setItinerary} = useCurrentItinerary()
@@ -18,12 +19,10 @@ export default function Collaborationcenter(){
   ]);
 
   return (
-    <div>
-    
-      
-      
-    
+    <div className="">
       <TripMap coordinates={[48.8566, 2.3522]} initialZoom={12} places={itinerary} />
+      <TodayItinarary/>
+      
     </div>
   );
 

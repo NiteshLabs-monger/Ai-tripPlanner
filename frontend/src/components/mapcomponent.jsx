@@ -21,19 +21,19 @@ export default function TripMap({ coordinates, initialZoom = 13, places = [] }) 
   const mapCenter = coordinates || [51.505, -0.09];
 
   return (
-    <div className='w-1/3 h-100 rounded-xl overflow-hidden '>
+    <div className='w-1/3 h-100 rounded-xl overflow-hidden'>
       <MapContainer 
         center={mapCenter} 
         zoom={initialZoom} 
         className='w-full h-full'
       >
-        {/* Free OpenStreetMap tiles */}
+        
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {/* Dynamically render markers for the AI's suggested places */}
+      
         {places.map((place, index) => (
           <Marker key={index} position={place.position}>
             <Popup>

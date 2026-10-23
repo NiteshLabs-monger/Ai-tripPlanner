@@ -64,4 +64,6 @@ const getItineraryById = asyncHandler(async (req, res) => {
   
 })
 
-export { generateItinerary, getItineraryById };
+
+
+export { generateItinerary, getItineraryById, editItinerary };

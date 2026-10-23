@@ -10,6 +10,8 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Carousel, CarouselContent } from "@/components/ui/carousel";
 import { CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Button } from "@/components/ui/button";
+import { Navigate } from "react-router-dom";
 
 export default function AskAi() {
   const [hasItinerary, setHasItinerary] = useState(false);
@@ -19,7 +21,12 @@ export default function AskAi() {
     setHasItinerary(true);
     setActiveTrip(data);
   };
+  
+  const scheduleTrip = () => {
+    
 
+
+  }
   return (
     // FIX 1: Max height constraint layout with consistent interior screen padding
     <div className="flex gap-6 bg-slate-100 h-screen w-screen p-6 box-border overflow-hidden">
@@ -32,9 +39,10 @@ export default function AskAi() {
               <CardTitle className="text-xl font-bold text-indigo-600">
                 {activeTrip?.destination || "Trip Title"}
               </CardTitle>
+               <input type="date" className="ml-4 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm" />
             </CardHeader>
             
-            {/* FIX 2: Dynamic Scroll Box & Content Centering for Carousel */}
+            {/* FIX 2: ynamic Scroll Box & Content Centering for Carousel */}
             <CardContent className="flex-1 overflow-y-auto flex items-center justify-center p-6">
               <div className="w-4/5 relative"> 
                 <Carousel className="w-full">
@@ -76,6 +84,12 @@ export default function AskAi() {
                 </Carousel>
               </div>
             </CardContent>
+            <CardFooter>
+              <Button className="bg-indigo-600 text-white hover:bg-indigo-700"
+               onClick={() => {}}>
+                Schedule My Trip
+              </Button>
+            </CardFooter>
           </>
         ) : (
           // Centered Form layout alignment wrapper

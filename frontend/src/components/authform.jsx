@@ -8,7 +8,7 @@ import { Field, FieldError, FieldLabel } from './ui/field.jsx';
 import { Input } from './ui/input.jsx';
 import { Button } from './ui/button.jsx'; // Assuming you have a button component
 import bgImage from '@/assets/trip.jpg'; 
-import { Loader2 } from 'lucide-react';// Import your image
+import { Loader2 } from 'lucide-react';
 import { useMatch } from 'react-router-dom';
 import { Link ,useNavigate} from 'react-router-dom';
 import { userService } from '@/api/authapi.js';

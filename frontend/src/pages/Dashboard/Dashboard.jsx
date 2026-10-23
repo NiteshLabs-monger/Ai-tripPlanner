@@ -229,6 +229,7 @@ export default function UpgradedAITravelDashboard() {
                 </div>
                 <span className="text-[11px] font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
                   0.8 Miles Max Separation
+                
                 </span>
               </div>
               

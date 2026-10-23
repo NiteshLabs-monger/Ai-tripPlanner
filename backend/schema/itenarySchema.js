@@ -11,7 +11,7 @@ const itineraryInputSchema = z.object({
     .max(30, { message: "We only support up to 30-day itineraries." }),
   
   budget: z.enum(['Budget', 'moderate', 'Luxury'], {
-    errorMap: () => ({ message: "Budget must be either 'Budget', 'Moderate', or 'Luxury'." })
+    errorMap: () => ({ message: "Budget must be either 'Budget', 'moderate', or 'Luxury'." })
   }),
   
   preferences: z.array(z.string())
